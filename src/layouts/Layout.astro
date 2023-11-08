@@ -1,0 +1,72 @@
+---
+// frontmatter part 
+// each files .astro under pages/ is a routes (index, interest, markdown)
+
+// style import 
+import "../styles/global.css";
+
+// layout import 
+import Header from "../layouts/Header.astro"
+import Footer from "../layouts/Footer.astro"
+
+// components imports 
+import Nav from "./Nav.astro";
+
+// Astro,props for passing arguments to head part 
+const {
+   title = "Xirong Cao",
+   description = "Personal Website",
+} = Astro.props;
+---
+
+<!-- 
+                     body part 
+writing down hoe Navbar works just so I remember next time 
+there are two div consist of the whole layout of the body
+the <Nav /> component is placed under the second one
+some to make it shows up as side bar, make body display with flex box (in the global.css)
+
+-->
+<html lang="en">
+   <Header {title} {description} />          <!-- Header -->
+   <!-- <body class="dark-mode"> -->
+   <body>
+      <div class="BodyContainer">
+         <slot />                            <!--  Slot  -->
+         <Footer />                          <!-- Footer -->
+      </div>
+      <div class="NavContainer">
+         <Nav />                             <!-- NavBar -->
+      </div>
+   </body>
+</html>
+
+
+
+<!-- styling -->
+<style>
+   .BodyContainer {
+      flex-grow: 1;     /* take over the rest place when other elements go sticky */
+   }
+   .NavContainer {
+      position: sticky;
+      /* top: 97px; */
+      top: 240px;
+      align-self: flex-start;
+      padding-left: 5rem;
+   }
+   @media (max-width: 1100px) {
+      .NavContainer {
+         padding-left: 2.5rem;
+         top: 387px;
+      }
+   }
+   @media (max-width: 700px) {
+      .NavContainer {
+         padding-left: 1rem;
+         top: 370px;
+         /* display: none; */
+      }
+   }
+  }
+</style>

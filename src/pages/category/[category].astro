@@ -1,0 +1,62 @@
+---
+// component imports
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+import CategoryCloud from "../../components/CategoryCloud.astro";
+
+// utils
+import { slugify, formatBlogPosts } from "../../js/utils";
+
+// new category needs to be define here first, there is a better, don't know how to do it yet
+export async function getStaticPaths() {
+   return [
+      {
+         params: { category: slugify("AI") },
+         props: { name: "AI" },
+      },
+      {
+         params: { category: slugify("SERIES") },
+         props: { name: "SERIES" },
+      },
+      {
+         params: { category: slugify("Notes") },
+         props: { name: "Notes" },
+      },
+   ];
+}
+
+// same here (refer to [...page].astro)
+export const prerender = true;
+
+const { category } = Astro.params;
+const { name } = Astro.props;
+
+const allPosts = await Astro.glob("../posts/*.md");
+const formattedPosts = formatBlogPosts(allPosts);
+const catPosts = formattedPosts.filter(
+   (post) => slugify(post.frontmatter.category) === category
+);
+---
+
+<Layout title={name}>
+   <section class="container" aria-label={`Posts about ${name}`}>
+      <h1 class="h1"><span>{name}</span></h1>
+      <div class="post-container">
+         {
+            catPosts.map((post) => (
+               <PostCard
+                  frontmatter={post.frontmatter}
+                  url={post.url}
+                  tagType="h2"
+               />
+            ))
+         }
+      </div>
+   </section>
+   <div class="CateContainer">
+      <aside  aria-label="Post categories">
+         <CategoryCloud showCount={true} />
+      </aside>
+   </div>
+</Layout>
+

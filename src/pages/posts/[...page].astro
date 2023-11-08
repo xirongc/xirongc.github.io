@@ -1,0 +1,51 @@
+
+---
+// component imports
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+import CategoryCloud from "../../components/CategoryCloud.astro";
+import Pagination from "../../components/Pagination.astro";
+
+// utils imports
+import { formatBlogPosts } from "../../js/utils";
+
+// this function will get all static information from .md post files and store into Astro.props
+export async function getStaticPaths({ paginate }) {
+   const allPosts = await Astro.glob("./*.md");
+   const formattedPosts = formatBlogPosts(allPosts);
+
+   return paginate(formattedPosts, {
+      pageSize: 4,
+   });
+}
+// getStaticPaths() is both requiring and generate HTML on demand 
+// setting prerender to let Astro generated the HTML on build, so it's static super fast
+export const prerender = true;
+
+
+// assign these Astro.props data into page parameters for below html to use
+// data coming from getStaticPaths() function in the frontmatter above
+const { page } = Astro.props;
+---
+
+<Layout title="Publications">
+   <section aria-label="New Posts">
+      <h1>All Posts</h1>
+      <div class="post-container">
+         {
+            page.data.map((post) => (
+               <PostCard
+                  frontmatter={post.frontmatter}
+                  url={post.url}
+               />
+            ))
+         }
+      </div>
+      <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+   </section>
+   <div class="CateContainer">
+      <aside  aria-label="Post categories">
+         <CategoryCloud showCount={true} />
+      </aside>
+   </div>
+</Layout>

@@ -1,0 +1,74 @@
+
+---
+// libaray import 
+import { Icon } from "astro-icon"
+
+// components imports 
+import NewsCard from "../components/NewsCard.astro"
+
+// import utils 
+import { formatNews } from "../js/utils.js"
+
+// import json data 
+import newData from "../data/news.json";
+const formattedNews = formatNews(newData, {limit: 20});
+---
+
+<div class="ScrollContainer">
+   <div class="scroll-title section-title">
+      <h3>News</h3>
+      <a href="/news/"><Icon name="scroll" width="22" /></a>
+   </div>
+   <div class="scrollbox">
+      <ul class="scroll-content">
+         {
+            formattedNews.map((new_data) => {
+               return (
+                  <NewsCard 
+                     date={new_data.date}
+                     action={new_data.action}
+                     place={new_data.place}
+                     place_link={new_data.place_link}
+                  />
+               );
+            })
+         }
+      </ul>
+   </div>
+</div>
+
+<style>
+   .scrollbox {
+      height: 245px;
+   }
+   .scroll-content {
+      height: 100%;
+      overflow-y: auto;
+   }
+   /* /* this is the holder for the bar, also known as tracker, set the same as background, so it's hidden */ 
+   .scroll-content::-webkit-scrollbar-track {
+      background: var(--color-grey);
+      background: var(--color-bg);
+      border-radius: 100vw;
+      margin-block: 0.2em;
+   }
+   /* this is the bar itself, pseudo-object, color is in separated properties */
+   .scroll-content::-webkit-scrollbar {
+      width: 10px;
+   }
+   /* this is the color setting for the bar, I want to set it initially invisible
+   /* the new macOS version have some bug at Safari, so this pseudo-object is not fully functioning,
+   /* ---------------------------------------------------------------------------------- */ 
+   .scroll-content::-webkit-scrollbar-thumb {
+      background-color: transparent;
+      background-color: var(--color-bg);
+      border-radius: 100vw;
+      /* border: solid 1px; */
+   }
+   /* this is the hover effect when scrolling, because it adds on .scrollbox */ 
+   .scroll-content:hover::-webkit-scrollbar-thumb {
+      border: solid 1px;
+   }
+   /* .scrollbox::-webkit-scrollbar-thumb:hover {  background: #555; } */ 
+   /* ---------------------------------------------------------------------------------- */
+</style>

@@ -1,0 +1,33 @@
+---
+// library import 
+import { Icon } from "astro-icon"
+
+// components 
+import PostCard from "../components/PostCard.astro"
+
+// utils imports 
+import { formatBlogPosts } from "../js/utils.js"
+const allPosts = await Astro.glob("../pages/posts/*.md")
+// here declare a variable return the posts/papers after some filtering reuqirement 
+// one of the argument we can pass in is the limit (how many post to display)
+// whenever you use this formattedPosts function in utils.js
+const formattedPosts = formatBlogPosts(allPosts, {
+  limit: 3,
+});
+---
+
+<div>
+   <div class="post-title section-title">
+      <h3>Posts</h3>
+      <a href="/news/"><Icon name="book" width="20" /></a>
+   </div>
+   {
+      formattedPosts.map((post) => (
+         <PostCard
+            frontmatter={post.frontmatter}
+            url={post.url}
+         />
+      ))
+   }
+</div>
+

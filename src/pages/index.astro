@@ -1,0 +1,37 @@
+---
+// layout import 
+import Layout from "../layouts/Layout.astro"
+import About from "../layouts/About.astro"
+import News from "../layouts/News.astro"
+import Posts from "../layouts/Posts.astro"
+---
+
+<Layout>
+
+   <section class="bio">
+      <About />
+   </section>
+   <!-- reserved section  -->
+   <section class="reserved">
+      <h3>Research</h3>
+      <p>
+         I am broadly interested in the field of 
+         <b>AI, particularly in generative model for both CV and NLP</b>, got decent experience 
+         on <b>generative models</b>, such as diffusion.
+         But my interests are not important. I might switch my interests based on what I will be doing
+         in the future. What matters is how much experience I had on a certain field shared with the future 
+         advisors or partners.
+         And the way we <b>work and communicate</b>.
+      </p>
+   </section>
+   <!-- news section -->
+   <section class="news">
+      <News />
+   </section>
+   <!-- posts section -->
+   <section class="posts">
+      <Posts />
+   </section>
+
+</Layout>
+

@@ -1,0 +1,31 @@
+---
+// layout imports
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Page Not Found">
+   <div class="temp">
+      <h1 class="h1">Under Construction...</h1>
+      <img src="/images/Doraemon.jpg"/>
+      <a href="/">Go Home</a>
+   </div>
+</Layout>
+
+<style>
+   .temp {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+   }
+   .temp a {
+      border: solid;
+      margin: 2rem 0rem;
+      padding: 1rem;
+   }
+   .temp img {
+      width: 20rem;
+      height: auto;
+      margin-top: 2rem;
+   }
+</style>

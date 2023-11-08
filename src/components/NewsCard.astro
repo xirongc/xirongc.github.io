@@ -1,0 +1,56 @@
+---
+// utils import 
+import { formatDate } from "../js/utils.js";
+
+// take and store data into Astro.props receiving from index.astro (feed.json)
+export interface Props {
+   date: string;
+   action: string;
+   place: string;
+   place_link: string;
+   emphaszied: string;     // originally thinking of adding some specific style for certain elements, leave it now
+}
+
+const { date, action, place, place_link, emphaszied } = Astro.props;
+---
+
+<!-- 
+here we only need to define the format and style for a single feed is enough, 
+btw span wrapped things inline(<p>, <a>, <h1>, etc)
+-->
+<ul>
+   <li>
+      <div class="NewsContainer">
+         <p class="date">{formatDate(date)}</p>
+         <p class="action">{action}
+            <a href={place_link}>&nbsp;{place}
+            </a>
+         </p>
+      </div> 
+   </li> 
+</ul>
+
+
+<style>
+   li {
+      list-style: none;
+   }
+   li p {
+      margin: 0rem 1rem 1rem 0rem;
+   }
+   .NewsContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      font-size: 16px;
+      line-height: 1.4;
+   }
+   .date {
+      font-weight: 500;
+      flex-shrink: 0;     /* prevent the date shrinking like action into new line */
+      width: 110px;
+   }
+   .action {
+      flex-grow: 1;              /* take up remaining horizontal space */
+   }
+</style>

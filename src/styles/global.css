@@ -1,0 +1,355 @@
+/* --------- global setting ---------- */
+
+/*
+ google fonts: 
+ 1) Indie Flower
+ 2) Montserrat
+ 3) Space Grotesk
+ 4) Ubuntu
+ 5) Zen Maru Gothic
+ */ 
+
+
+/* import fonts from google */
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Space+Grotesk:wght@300;400;500;600;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
+
+
+/* 
+   - asterisk(*) means select all elements, and :after :before had to specify separately
+   - box-sizing: border-box means includes padding and border in the element's total width height
+   - font: inherit font properties from parent elements
+   - marigin & padding: setting to 0
+   - inhert: making all elements inherit from their parent div, h1 h2 tag doesn't affect them
+*/
+*,
+*:after,
+*:before {
+   margin: 0;
+   padding: 0;
+}
+
+/* 
+   for all the default nav tag (just nav tag): 
+   specifically ol and ul sub tag, remove their original style, the bullet(•)
+*/
+nav :where(ol, ul) {
+  list-style: none;
+}
+
+img,
+picture {
+  width: 100%;
+  display: block;
+}
+
+/* wrapped out lines  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+small {
+   word-wrap: break-word;
+   font-family: 'Montserrat';
+}
+/* 
+   set all paragraph to font weight = 400 when using Montserrat
+   uniform them to put them into container and limit their display
+*/
+p {
+   font-weight: 400;
+   display: -webkit-box;
+   -webkit-line-clamp: 50;        /* Max number of lines you want to display */
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   font-size: 15px;
+}
+
+/* setup (text)selected color for webpage */
+::selection {
+   background: var(--color-grey);
+   color: var(--color-black);
+}
+/* setup for Firefox */
+::-moz-selection {          
+   background: var(--color-grey);
+   color: var(--color-black);
+}
+
+
+/* customize code blocks in md */
+pre, code {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  border: 1px solid #ccc; /* optional border */
+}
+
+
+/* set up unified space for all section */
+section {
+   padding: 2.5rem 0rem 3rem;
+}
+
+
+/* 
+   viewport (vh) could make the padding dynamic when resizing windows 
+   setting percentage is respect to parent box 
+*/
+/* --------------- Body Section --------------- */
+body {
+   display: flex;
+   background: var(--color-light);
+   padding: 2rem 7rem;
+   margin: 0rem auto;
+   max-width: 1100px;
+   transition: background-color 0.5s ease;   /* slow down the whole transition happening in body (mode switching) */
+}
+
+.dark-mode {
+   background: var(--color-dark);
+   color: var(--color-lightdark);
+}
+
+
+/* no underline(decoration) for all anchor tag */
+a {
+   font-family: "Montserrat";
+   text-decoration: none;
+   color: var(--color-black);
+}
+.dark-mode a {
+   color: var(--color-lightdark);
+}
+a:hover {
+   color: var(--color-hyperlink);
+   filter: brightness(90%);
+}
+.dark-mode a:hover {
+   color: var(--color-blue);
+}
+
+
+/* --------------- Nav Section --------------- */
+.mode-icon {
+   fill: var(--color-black);
+}
+.dark-mode .mode-icon {
+   fill: var(--color-light);
+   filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.7));  /* shadow effect */
+}
+.home-icon a {
+   filter: drop-shadow(2px 1px 1px rgba(0, 0, 0, 0.3));  /* shadow effect */
+}
+.dark-mode .home-icon a {
+   fill: var(--color-black);
+   filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.7));  /* shadow effect */
+}
+
+
+/* --------------- About Section --------------- */
+.intro a {
+   color: var(--color-hyperlink);
+}
+.dark-mode .intro a {
+   color: var(--color-blue);
+}
+.dark-mode strong {
+   font-weight: 500;
+   color: var(--color-light);
+}
+.profile h2 {
+   color: var(--color-black);
+}
+.dark-mode .profile h2 {
+   color: var(--color-light);
+}
+
+/* Contact Icon */
+.ContactIcon {
+   fill: var(--color-black);
+}
+.dark-mode .ContactIcon {
+   fill: var(--color-lightdark);
+}
+.ContactIcon:hover {
+   fill: var(--color-hyperlink);
+}
+.dark-mode .ContactIcon:hover {
+   fill: var(--color-blue);
+}
+.text {
+   font-size: 16px;
+   padding-right: 0.3rem;
+   font-weight: 600;
+   color: var(--color-black);
+}
+.dark-mode .text {
+   font-weight: 500;
+}
+.dark-mode .contact a {
+   filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.7));  /* shadow effect */
+}
+
+/* --------------- Reserved Section --------------- */
+/* will be removed later when think of what to put in the reserverd section */
+.reserved h3 {
+   color: var(--color-red);
+   margin-bottom: 1rem;
+}
+.reserved b {
+   color: var(--color-red);
+}
+.reserved p {
+   line-height: 2;
+}
+.dark-mode .reserved h3 {
+   color: var(--color-lightred);
+}
+.dark-mode .reserved b {
+   color: var(--color-lightred);
+   font-weight: 500;
+}
+
+/* --------------- News Section --------------- */
+li a {
+   color: var(--color-hyperlink);
+}
+.dark-mode li a {
+   color: var(--color-blue);
+}
+
+/* for section title and their icon (e.g. News, Posts, etc) */
+.section-title {
+   display: flex;
+   align-items: center;
+   margin-bottom: 1rem;
+}
+.section-title a {
+   display: flex;
+   align-items: center;
+   margin: 0.2rem 0.6rem;
+}
+.dark-mode h3 {
+   color: var(--color-light);
+}
+.dark-mode .section-title a svg {
+   fill: var(--color-light);
+}
+.section-title a:hover svg {
+   fill: var(--color-red);
+}
+
+/* --------------- Posts Section --------------- */
+.postcard {
+   background: var(--color-white);
+   box-shadow: 0.2px 0.5px 0.6px #8186bb40, 0.3px 0.8px 1px -1.2px #8186bb40,
+         0.8px 1.9px 2.3px -2.5px #8186bb40;
+}
+.dark-mode .postcard {
+   background: var(--color-middark);
+   box-shadow: 0px 3px 3px 0px var(--color-black);
+}
+
+/* category box at the bottom */
+.CateContainer {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.category {
+   /* margin-bottom: 0.2rem; */
+   margin: 0.2rem 0rem 0.2rem 0;
+   display: flex;
+   flex-wrap: wrap;
+   list-style-type: none;     /* because it's in a ul tag */
+}
+.category li {
+   margin: 0.2rem 0.25rem 1rem;
+}
+.category a {
+   border-radius: 0.3rem;
+   padding: 3px 10px;
+   text-align: center;
+   background-color: var(--color-black);
+   color: var(--color-white);
+   text-decoration: none;                 /* remove underline */
+   letter-spacing: 0.045em;               /* space between text letter */
+   text-transform: uppercase;
+   font-size: 11px;
+}
+.dark-mode .category a {
+   background-color: var(--color-light);
+   color: var(--color-black);
+   font-weight: 500;
+}
+.post-content a {
+   font-weight: 600;
+}
+.dark-mode .post-content a {
+   color: var(--color-light);
+   font-weight: 500;
+}
+.dark-mode .post-content a:hover {
+   color: var(--color-blue);
+}
+.related-post {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+.related-post > div {
+   margin: 0.5rem 0rem;
+   padding: 0.5rem;
+   border: solid;
+   background: var(--color-white);
+}
+
+
+@media (max-width: 1100px) {
+   p {
+      font-size: 15px;
+   }
+}
+@media (max-width: 700px) {
+   body {
+      padding: 1.2rem;
+   }
+   p {
+      font-size: 13px;
+   }
+   .CateContainer {
+      margin: 0rem 0 0rem;
+   }
+}
+
+
+/* root level pre-defined variables */
+:root {
+   --color-white:#fcfcfd;
+   --color-dark:#1d1e20;
+   --color-lightdark: #8A8B8C;
+   --color-middark: #171819;
+   --color-black: #121212;
+   --color-grey: #D8DEE9;
+   --color-lightgreen: #A1EFD3;
+   --color-green: #62D196;
+   --color-lightblue: #7aa2f7;
+   --color-blue: #3D5AF1;
+   --color-cyan: #7DE5ED;
+   --color-hyperlink: #0000FF;
+   --color-red: #ab1c0f;
+   --color-light: #f4f4f4;
+   --color-darklight: #e8e8e8;
+   --color-lightred: #CF455C;
+   --color-beige: #FFFAF4;
+
+   --icon-sun-display: block;
+   --icon-moon-display: none;
+}

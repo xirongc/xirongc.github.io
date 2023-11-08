@@ -1,0 +1,44 @@
+---
+// component imports
+
+// props across different routes for prevURL and nextURL
+const { prevUrl, nextUrl } = Astro.props;
+---
+
+<!-- change the styling here -->
+<nav class="pagination" aria-label="Post Pages">
+   {
+      prevUrl && (
+         <a href={prevUrl} class="">
+            <span>Prev</span>
+         </a>
+      )
+   }
+   {
+      nextUrl && (
+         <a href={nextUrl} class="">
+            <span>Next</span>
+         </a>
+      )
+   }
+</nav>
+
+<style>
+   .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2rem;
+   }
+   .pagination a {
+      color: var(--color-black);
+      border: solid 2px;
+      padding: 0.2rem 0.5rem;
+   }
+   
+   @media (max-width: 700px) {
+      .pagination {
+         margin-top: 4rem;
+      }
+   }
+</style>

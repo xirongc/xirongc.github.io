@@ -1,0 +1,244 @@
+---
+// Library and data imports
+import { Icon } from "astro-icon";
+import navData from "../data/navData";
+---
+
+<!-- Navigation Bar -->
+<nav aria-label="navbar">
+   <div class="navbar">
+      <div class="home-icon">
+          <a href="/" class="logomark" aria-label="Go home">
+            <Icon name="logomark" width="27.5" />
+          </a>
+      </div>
+      <ul>
+         { navData.map((item) => (
+           <a class="nav" href={item.path}>{item.name}</a>
+         )) }
+      </ul>
+
+      <!-- Dark Mode Button -->
+      <div id="ModeContainer" class="mode theme-toggle">
+         <div class="mode-icon">
+            <Icon id="sun" name="sun" class="icon" width="17" />
+            <Icon id="moon" name="moon" class="icon hidden" width="17" />
+         </div>
+      </div>
+   </div>
+</nav>
+
+
+<style>
+   .navbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+   }
+   .navbar a {
+      margin-bottom: 1.4rem;
+   }
+   .nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 15px;
+   }
+   .logomark {
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      place-items: center;
+   }
+   .mode {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+   }
+   .mode-icon {
+      position: relative;
+      width: 17px;
+      height: 17px;
+   }
+  .icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      transition: opacity 0.25s;
+   }
+   /* .icon:not(.hidden) { */
+   /*   animation: fade-in 0.5s ease-in-out forwards; */
+   /* } */
+   .hidden {
+      opacity: 0;
+   }
+   /* this class is for solving the icon re-render problem in darkmode
+   by setting both icon invisible before the javascript get the localStorage value 
+   the reason that is re-render everytime is because html will render first, 
+   then the javascript will look for the localStorage value, and then render whatever it is */
+   .rotate {
+      animation: spin 0.5s linear forwards;
+   }
+   .rotate-fast {
+      animation: spin-fast 0.5s linear forwards;
+   }
+   /* 
+   because the sun with angle, and the velocity of the angle is faster than the center
+   so visual need to make it slawer, and I make it spin only 360 degree but the moon 720 degee
+   */
+   @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+   }
+   @keyframes spin-fast {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(720deg); }
+   }
+   /* @keyframes fade-in { */
+   /*    from { opacity: 0; } */
+   /*    to { opacity: 1; } */
+   /* } */
+
+   /* responsive design */
+   @media (max-width: 1100px) {
+      .nav {
+         font-size: 15px;
+      }
+   }
+   @media (max-width: 700px) {
+      .navbar .nav {
+         font-size: 12px;
+      }
+      .logomark svg {
+         width: 25px;
+      }
+   }
+</style>
+
+
+
+<!-- Script -->
+<script>
+   // selectors for theme and icons
+   const themeToggleBtn = document.querySelector('.theme-toggle');    // dark mode switcher selector
+   const div = document.getElementById("ModeContainer");              // mode div
+   const sun_icon = document.getElementById("sun");                   // sun icon
+   const moon_icon = document.getElementById("moon");                 // moon icon
+
+
+   // state for theme
+   // the reason we need this handler to deal with key and value in localStorage is for any machine
+   // to remember your mode setting for website, which achieve through setting up the key and value in localStorage
+   const theme = localStorage.getItem('theme');                       // first, try to get them in localStorage
+
+
+   // create a sun_icon evalation value from localStorage, 
+   // if it is not darkmode, it will be set to True, if it is dark mode already, it will be set to False
+   let isSun_icon = localStorage.getItem('theme') !== 'dark-mode';
+   // if False, (is darkmode), add hidden to sun_icon, remove hidden from moon_icon
+   if (!isSun_icon) {
+      sun_icon.classList.add("hidden");
+      moon_icon.classList.remove("hidden");
+   }
+
+   // remove initially hidden sun and moon icon
+   // sun_icon.classList.remove("icon-initial-hidden")
+   // moon_icon.classList.remove("icon-initial-hidden")
+
+
+
+   // on mount for theme
+   // same: if (theme) then { document.body.classList.add(theme) } == theme && document.body.classList.add(theme);
+   if (theme) {
+      // Temporarily disable transitions
+      document.body.style.transition = 'none';
+      document.body.classList.add(theme);
+
+      // Re-enable transitions
+      setTimeout(() => {
+          document.body.style.transition = '';
+      }, 0);
+   }  
+   
+
+   // handler for theme toggle
+   // check: inspect -> application -> localStorage
+   const handleThemeToggle = () => {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+         localStorage.setItem('theme', 'dark-mode');
+      } else {
+         localStorage.removeItem('theme');
+      }
+   };
+
+   // event for theme toggle
+   themeToggleBtn.addEventListener('click', handleThemeToggle);
+
+   //   ----- this is how setTimeout() is used -----
+   //
+   //    setTimeout(() => {
+   //       console.log("This will be logged after 2 seconds");
+   //    }, 2000);
+   // event for icon toggle
+   div.addEventListener("click", () => {
+      if (isSun_icon) {
+         // Trigger the rotation animations
+         sun_icon.classList.add("rotate");
+         setTimeout(() => {
+            sun_icon.classList.add("hidden");
+            moon_icon.classList.remove("hidden");
+            moon_icon.classList.add("rotate-fast");
+         }, 250);
+         // Reset the rotation classes after the animation
+         setTimeout(() => {
+            sun_icon.classList.remove("rotate");
+            moon_icon.classList.remove("rotate-fast");
+         }, 500);
+      } else {
+         // Trigger the rotation animations
+         moon_icon.classList.add("rotate-fast");
+         setTimeout(() => {
+            moon_icon.classList.add("hidden");
+            sun_icon.classList.remove("hidden");
+            sun_icon.classList.add("rotate");
+         }, 400);
+         // Reset the rotation classes after the animation
+         setTimeout(() => {
+            moon_icon.classList.remove("rotate-fast");
+            sun_icon.classList.remove("rotate");
+         }, 500);
+      }
+      isSun_icon = !isSun_icon;
+   });
+
+</script>
+
+
+
+<!-- 
+-------------- the mode button setting part -----------
+some explanation for position in CSS
+1) position: relative;
+   - When you set an element to position: relative;
+      it's laid out according to the normal flow. 
+      But now, you can adjust its position using top, right, left, 
+   - originality of the html element 
+      if no size given, you can think of they are all points starting from top left 
+      where is the (0, 0) of the coordinate, that's be default
+2) position: absolute; 
+   - we just mention the starting point of the html element, top left. 
+      That's the origin of all html element if you want to visualize them with CSS
+   - set to absolute means an element with this property is positioned relative 
+      to the nearest positioned ancestor(in our case icon class relative to .mode-icon class). 
+   - remember when you set either relative and absolute for position
+      you become a point at top left,
+      therefore you set the witdh and height for parent container 
+      to have the same size of the children item
+      and that way, children will get align because parent container has size, 
+      and the nearest location change
+   - If no positioned ancestors exist, it takes up position relative to the document body.
+-------------- the mode button setting part -----------
+-->

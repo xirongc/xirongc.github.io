@@ -1,0 +1,64 @@
+---
+// component imports
+import Link from "../components/Link.astro";
+import Layout from "../layouts/Layout.astro";
+
+// assets file import 
+import Moanin from "../data/assets/moanin.pdf";
+import SleepAway from "../data/assets/sleepaway.pdf";
+
+// adding "/" in src will automatically find in the root path, which is public, and find the images folder under it
+---
+
+<Layout title="Interest" description="My About Page">
+   <section class="container interest" aria-label="About Me">
+      <img
+         src="/images/12angryman.png"
+         alt="My headshot"
+         width="700"
+         height="630"
+      />
+      <div class="content">
+         <h1 class="h1">[...]</h1>
+         <p>Still thinking what to put for this page, leave two piano sheets here for future use maybe.
+            This website <a href="https://www.hooktheory.com/theorytab/view/bob-acri/sleep-away">Hook Theory</a> 
+            has impressive functionality for visualizing music chord, melody, and stuffs, check it out. Doing a movie
+            colleciton is also a option, can just integrate with noteStrom, showing a list of traveling stuff, etc.
+         </p>
+         <span><a href={Moanin} target="_blank" rel="noopener noreferrer">Moanin'</a></span>
+         <span><a href={SleepAway} target="_blank" rel="noopener noreferrer">Sleep Away</a></span>
+      </div>
+   </section>
+</Layout>
+
+<style>
+   span {
+      margin: 0rem 3rem 0rem 0rem;
+   }
+   a {
+      text-decoration: none;
+      color: var(--color-red);
+      font-weight: 500;
+   }
+   a:hover {
+      opacity: 0.6;
+   }
+   img {
+      width: 500px;
+      height: 300px;
+      margin-right: auto;
+      margin-left: auto;
+   }
+   @media (max-width: 700px) {
+      img {
+         width: 400px;
+         height: 250px;
+      }
+   }
+   @media (max-width: 600px) {
+      img {
+         width: 300px;
+         height: 150px;
+      }
+   }
+</style>

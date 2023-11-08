@@ -1,0 +1,77 @@
+---
+import Contact from "../components/Contact.astro";
+---
+
+<div class="about">
+   <div class="intro">
+      <p>
+         Hi, I am a CS master student at <a href="https://www.fordham.edu">Fordham University</a>. 
+         <strong>Currently</strong>, I am doing a thesis with <a href="https://wenqiwei789.github.io/Homepage/" target="_blank" rel="noopener noreferrer">Dr. Wenqi Wei</a>, and the topic is related to 
+         generative AI robustness. I have one publication about robustness in 
+         diffusion model. Check out the CV.
+      </p>
+      <p>
+         <strong>Prior to Fordham</strong>, I studied Psychology at University of California, Irvine (<a href="https://uci.edu">UCI</a>), 
+         focusing on cognitive ability. Later, been worked as Data Analyst for a short period of time during pandemic, 
+         but the limit of that position pushs me to AI, and naturally I start learning all those things.
+         <a href="https://en.wikipedia.org/wiki/Cognitive_science">Cognitive Science</a> 
+         has long been exploring how Intelligence works, and I suppose, 
+         with Computer Science the progress could be boosted largely.
+      </p>
+   </div>
+   <div class="profile">
+      <img 
+         src="/images/xirongcao.jpg" 
+         width="350"
+         height="350"
+         class="headshot" />
+      <div>
+         <h2>Xirong Cao</h2>
+         <p>xcao50@fordham.edu</p>
+         <Contact />
+      </div>
+   </div>
+</div>
+
+
+<style>
+   .about {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 65px;
+   }
+   .intro p {
+      line-height: 2;
+      -webkit-line-clamp: 13;        /* Max number of lines you want to display */
+   }
+   /* profile image itself */
+   .headshot {
+      height: 170px;
+      width: 170px;
+      border-radius: 50%;
+      object-fit: cover;   /* main aspect ratio and cover the whole area */
+      object-position: 0px -25px; /* position your image */
+      margin: auto;
+   }
+   /* profile text container */
+   .profile > div {
+      margin-top: 0.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+   }
+   .profile h2 {
+      margin: 0.4rem 0 0.4rem;
+      font-size: 20px;
+      font-weight: 600;
+   }
+
+   @media (max-width: 1100px) {
+      .about {
+         flex-direction: column-reverse;
+         gap: 40px;
+      }
+   }
+</style>

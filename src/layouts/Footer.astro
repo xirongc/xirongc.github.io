@@ -1,0 +1,39 @@
+---
+// set some variables for below to use
+---
+
+<footer>
+   <div>
+      <span>
+         <small>Copyright &copy; <span id="copyright"></span> | All Rights Reserved</small>
+      </span>
+   </div>
+</footer>
+
+
+
+<!-- style -->
+<style>
+   div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+   }
+   @media (max-width: 700px) {
+      small {
+         font-size: 10px;
+      }
+   }
+</style>
+
+
+
+<!-- script -->
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+      const name = "Myself"      // define your name
+      const currentYear = new Date().getFullYear();
+      const copyrightText = `${currentYear} ${name}&nbsp;`;    // dynamic setting
+   document.getElementById("copyright").innerHTML = copyrightText;
+   })
+</script>

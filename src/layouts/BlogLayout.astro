@@ -1,0 +1,144 @@
+---
+// layout import 
+import Layout from "./Layout.astro";
+import CategoryCloud from "../components/CategoryCloud.astro";
+import RelatedPosts from "../components/RelatedPosts.astro";
+
+// utils imports
+import { slugify, formatDate, formatBlogPosts } from "../js/utils";
+// frontmatter import
+const { frontmatter } = Astro.props;
+// console.log(frontmatter) for // for checking the output of frontmatter
+const { title, abstract, date, category, author, image } = frontmatter;
+
+// grap all blog post information 
+const allPosts = await Astro.glob("../pages/posts/*.md");
+const formattedPosts = formatBlogPosts(allPosts, {
+   sortByDate: false,
+});
+const relatedPosts = formattedPosts
+   .filter(
+      (post) =>
+         post.frontmatter.category.toLowerCase() === category.toLowerCase() &&
+         post.frontmatter.title !== title
+   )
+   .slice(0, 3);
+---
+
+<!-- 
+when you import the .astro module that has <slot /> inside, 
+whatever you write in this file, it will be automatically and only fit into slot placeholder, 
+and it won't affect other component you defined in the astro file you imported, 
+because their place is taken by what you wrote in there, here we write a new slot for markdown file to fit in
+-->
+
+<Layout {title} {abstract}>
+   <!-- header of the post page -->
+   <header>
+      <div class="postHead">
+         <small class="category">
+            <a href={`/category/${slugify(category)}/`} >{category}</a>
+         </small>
+         <h1>{title}</h1>
+         <p>
+            by {author} • {formatDate(date)}
+         </p>
+      </div>
+      <img
+         src={image.src}
+         alt={image.alt}
+      />
+   </header>
+   <!-- content of the post page -->
+   <div class="PostContainer">
+      <div class="post-content">
+         <slot />
+      </div>
+      <div class="sidebar">
+         <aside aria-label="Post categories">
+            <CategoryCloud />
+         </aside>
+         {
+            relatedPosts.length > 0 && (
+               <aside aria-label="Related posts">
+                  <RelatedPosts {relatedPosts} />
+               </aside>
+            )
+         }
+      </div>
+   </div>
+</Layout>
+
+<style>
+   .PostContainer {
+      margin: 2.5rem 0 1.5rem;
+      /* border: solid; */
+      display: grid;
+      grid-template-columns: 70% 30%;
+      grid-template-rows: auto;
+      grid-template-areas:
+         "post-content sidebar";
+   }
+   .post-content {
+      grid-area: post-content;
+      padding: 0 1.5rem;
+      font-size: 15px;
+   }
+   .sidebar {
+      grid-area: sidebar;
+      padding: 0 1.5rem;
+   }
+   .sidebar aside {
+      margin: 0 0 2rem;
+   }
+   .sidebar h3 {
+      margin: 0 0.2rem 0.3rem 0.2rem;
+   }
+   .postHead {
+      display: grid;
+      place-items: center;
+      padding: 2.5rem 0;
+      /* border: solid; */
+   }
+   .postHead .category a {
+      font-size: 13px;
+   }
+   .postHead h1 {
+      font-size: 26px;
+      margin: 1rem 0;
+   }
+
+   @media (max-width: 1200px) {
+      .PostContainer {
+         display: flex;
+         flex-direction: column;
+      }
+      .post-content {
+         /* border: solid; */
+      }
+      .sidebar {
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         align-items: top;
+         border-top: solid 2px;
+         margin-top: 4rem;
+      }
+      .sidebar aside {
+         margin: 2rem 1rem 0rem;
+      }
+      .sidebar h3 {
+         font-size: 15px;
+      }
+      .postHead h1 {
+         font-size: 20px;
+      }
+      .postHead p {
+         font-size: 15px;
+      }
+      img {
+         width: 100%;
+         height: auto;
+      }
+   }
+</style>

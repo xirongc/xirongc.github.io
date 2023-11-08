@@ -1,0 +1,38 @@
+---
+// svg Icon optimization library 
+import { Icon } from "astro-icon"
+
+// file import 
+import CV from "../data/assets/xirongcao-cv.pdf"
+---
+
+<div class="contact">
+   <!-- <a href="https://www.github.com" class="ContactIcon"><Icon name="cv" width="25" /></a> -->
+   <a href="/unknown/" class="ContactIcon goolge-scholar"><Icon name="google-scholar" width="24" /></a>
+   <a href="https://github.com/xirongc" class="ContactIcon github"><Icon name="github" width="20" /></a>
+   <a href="/unknown/" class="ContactIcon linkedin"><Icon name="linkedin" width="17.5" /></a>
+   <a href={CV} target="_blank" class="ContactIcon text">CV</a>
+</div>
+
+<style>
+   .contact {
+      display: flex;
+      justify-content: center;   /* no space between each item, set padding/margin in need */
+      align-items: center;
+      margin: 0.2rem auto 0 auto;
+   }
+   .ContactIcon {
+      margin: 0.2rem 0.75rem;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      place-items: center;
+   }
+   /* just for adjusting the space between icons, man */
+   .github {
+      padding-right: 0.3rem;
+   }
+   .linkedin {
+      padding-right: 0.3rem;
+   }
+</style>
