@@ -2,7 +2,7 @@
 ## To-Do 
 - [ ] *Webpage layout for displaying cv & experience, like the one [Xiang's](https://jessegator.github.io/cv/) version have, and could be place in bio, at there put a icon for pdf cv download*
 - [ ] *the mode button is rendering everytime on dark mode when switching between pages, which is because using localstorage, client-side rendering. Astro support server side render, make it server side*
-- [ ] [*therefore the way icon animation is written also might needed to change*]
+- [ ] [*therefore the way icon animation is written also might needed to change, or adding two animation one for spinning or the fade-in*]
 - [ ] [*JoJo Style*](https://www.youtube.com/watch?v=s7oTqPHeXEY)
     - *click the header icon, play "the world" sound effect, and "砸瓦鲁多"*
     - *Text starting floating from top to down*
